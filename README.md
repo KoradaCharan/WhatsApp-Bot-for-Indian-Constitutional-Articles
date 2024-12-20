@@ -24,10 +24,8 @@ cd WhatsApp-Bot-for-Indian-Constitutional-Articles
 python -m venv venv  
 
 #### Activate the virtual environment:
-
 Windows:
 venv\Scripts\activate  
-
 macOS/Linux:
 source venv/bin/activate  
 
