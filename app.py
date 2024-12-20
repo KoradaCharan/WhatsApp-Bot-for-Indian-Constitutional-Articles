@@ -1,10 +1,10 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
-from google.generativeai import GenerativeModel, GenerationConfig  # Ensure this import is correct
+from google.generativeai import GenerativeModel, GenerationConfig  
 import google.generativeai as genai
 app = Flask(__name__)
 
-gemini_api_key = 'AIzaSyAiiK5e3IczRDfbb-wz59_m2x0XQ12Vnno'
+gemini_api_key = 'YOUR_GEMINI_API_KEY'
 
 @app.route("/", methods=["GET"])
 def index():
@@ -22,23 +22,23 @@ def whatsapp():
         msg.body("Goodbye! Feel free to message me anytime.")
     else:
         msg.body("Generating your Article. Please wait...")
-        story = generate_story(incoming_msg)  # Call to the function for story generation
+        story = generate_article(incoming_msg)  # function call for article generation
         msg.body(story)
 
     return str(resp)
 
-def generate_story(article_text):
+def generate_article(article_text):
 
-    genai.configure(api_key="AIzaSyAiiK5e3IczRDfbb-wz59_m2x0XQ12Vnno")
+    genai.configure(api_key="YOUR_GEMINI_API_KEY")
     model = genai.GenerativeModel("gemini-1.5-flash")
     article_text+=" In Only Indian Constitution."
-    prompt = f"Create an Indian Constitutional story based on the article {article_text}. Keep the language simple and include a short summary at the end. create a intresting and attractive story to understand that indian article. Limit this to only indian constitution."
+    prompt = f"Explain the Indian Constitutional article {article_text}. Keep the language simple and include a short summary at the end. Limit this to only indian constitution."
 
     try:
         response = model.generate_content([article_text])
-        return response.text.strip() if response.text else "Failed to generate story."
+        return response.text.strip() if response.text else "Failed to generate article."
     except Exception as e:
-        return f"Error generating story: {e}"
+        return f"Error generating article: {e}"
 
 
 if __name__ == "__main__":
